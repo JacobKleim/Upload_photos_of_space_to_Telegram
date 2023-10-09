@@ -1,25 +1,25 @@
 import argparse
 import os
-import requests
 
+import requests
 from dotenv import load_dotenv
 
 from utils import fetch_spacex_last_launch
 
 
-def get_url_spacex(id):
+def get_urls_spacex_launch_image(id):
     url = f"https://api.spacexdata.com/v5/launches/{id}"
     response = requests.get(url)
     response.raise_for_status
     info = response.json()
-    links = info['links']
-    flickr = links['flickr']
-    images = flickr['original']
-    return images
+    images = info['links']['flickr']
+    images_url = images['original']
+    return images_url
 
 
 def main():
     load_dotenv()
+
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-l', '--lauch_id',
@@ -28,8 +28,11 @@ def main():
 
     args = parser.parse_args()
 
+    filename = 'spacex'
+
     lauch_id = args.lauch_id
-    fetch_spacex_last_launch(get_url_spacex(lauch_id))
+
+    fetch_spacex_last_launch(get_urls_spacex_launch_image(lauch_id), filename)
 
 
 if __name__ == '__main__':

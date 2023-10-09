@@ -1,8 +1,9 @@
 import os
-import requests
+from os.path import splitext
 from pathlib import Path
 from urllib.parse import urlparse
-from os.path import splitext
+
+import requests
 
 
 def get_filename_and_extension(url):
@@ -11,20 +12,19 @@ def get_filename_and_extension(url):
     basename = os.path.basename(path)
     print(basename)
     splitted_path = splitext(basename)
-    filename = splitted_path[0]
-    print(filename)
     extension = splitted_path[1]
     print(extension)
-    return filename, extension
+    return extension
 
 
-def fetch_spacex_last_launch(urls):
+def fetch_spacex_last_launch(urls, filename):
     path = Path("images")
     path.mkdir(parents=True, exist_ok=True)
     params = {'api_key': 'MYyGVtySmAkcUE1YrfZHTTSKbhf09dbXruwo0HrW'}
     for url_number, url in enumerate(urls):
-        filename, extension = get_filename_and_extension(url)
-        # print(filename)
+        extension = get_filename_and_extension(url)
+        if not extension or extension == "":
+            pass
         filepath = path / f'{filename}_{url_number}{extension}'
         response = requests.get(url, params=params)
         response.raise_for_status()
