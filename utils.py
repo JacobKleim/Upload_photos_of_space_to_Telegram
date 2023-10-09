@@ -6,14 +6,12 @@ from urllib.parse import urlparse
 import requests
 
 
-def get_filename_and_extension(url):
+def get_file_extension(url):
     parts_url = urlparse(url)
     path = parts_url.path
     basename = os.path.basename(path)
-    print(basename)
     splitted_path = splitext(basename)
     extension = splitted_path[1]
-    print(extension)
     return extension
 
 
@@ -22,7 +20,7 @@ def fetch_spacex_last_launch(urls, filename):
     path.mkdir(parents=True, exist_ok=True)
     params = {'api_key': 'MYyGVtySmAkcUE1YrfZHTTSKbhf09dbXruwo0HrW'}
     for url_number, url in enumerate(urls):
-        extension = get_filename_and_extension(url)
+        extension = get_file_extension(url)
         if not extension or extension == "":
             pass
         filepath = path / f'{filename}_{url_number}{extension}'

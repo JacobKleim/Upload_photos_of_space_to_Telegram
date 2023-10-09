@@ -23,16 +23,16 @@
 
 2. Create a .env file with parameters:
    ```
-   LAUNCH_ID=default spacex launch id for downloading photos
+   LAUNCH_ID=latest (default spacex launch id for downloading photos)
    ```
    ```
-   TELEGRAM_TOKEN=token for your bot
+   BOT_TELEGRAM_TOKEN=token for your bot
    ```
    ```
    TELEGRAM_CHANNEL_ID=id of your Telegram channel or chat
    ```
    ```
-   PUBLICATION_FREQUENCY=the default time interval for sending photos
+   PUBLICATION_FREQUENCY=14400 (the default time interval for sending photos)
    ```
 
 3. Сreate and activate a virtual environment:

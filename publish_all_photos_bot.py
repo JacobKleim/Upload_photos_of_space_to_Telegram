@@ -8,7 +8,7 @@ import telegram
 from dotenv import load_dotenv
 
 
-def publish_all_photos(channel_id, tg_token, images):
+def publish_all_photos_bot(channel_id, tg_token, images):
 
     bot = telegram.Bot(token=tg_token)
     image_directory = 'images'
@@ -41,7 +41,7 @@ def main():
 
     publication_frequency = int(args.publication_frequency)
 
-    tg_token = os.environ.get('TELEGRAM_TOKEN')
+    tg_token = os.environ.get('BOT_TELEGRAM_TOKEN')
     channel_id = os.environ.get('TELEGRAM_CHANNEL_ID')
 
     max_retries = 5
@@ -51,7 +51,7 @@ def main():
 
     while True:
         try:
-            images = publish_all_photos(channel_id, tg_token, images)
+            images = publish_all_photos_bot(channel_id, tg_token, images)
             retry_count = 0
         except ConnectionError as con_error:
             print(con_error)
