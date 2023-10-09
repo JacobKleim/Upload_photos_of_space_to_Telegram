@@ -89,3 +89,5 @@
 
 ## Example of work
  
+![tg1](https://github.com/JacobKleim/Upload_photos_of_space_to_Telegram/assets/119351169/532f9cdc-37f4-44b6-8fa5-c4a7d5cfb10c)
+
