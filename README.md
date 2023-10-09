@@ -76,7 +76,7 @@
    ```
    python publish_photo_bot.py
    ```
-   python If you want to launch a bot with the specified time interval, then specify the duration in seconds as an integer:
+   If you want to launch a bot with the specified time interval, then specify the duration in seconds as an integer:
    ```
    python publish_all_photos_bot.py -p 100
    ```
