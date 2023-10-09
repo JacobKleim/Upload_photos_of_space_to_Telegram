@@ -54,11 +54,11 @@
 5. Start the project:
    If you want to use your SpaceX startup ID, then specify it when running the script:
    ```
-   python fetch_nasa_apod_images.py -l 5eb87d47ffd86e000604b38a
+   python fetch_spacex_images.py -l 5eb87d47ffd86e000604b38a
    ```
    If you want to use the default identifier that indicates the last launch of SpaceX, then run the script without parameters:
    ```
-   python fetch_nasa_apod_images.py
+   python fetch_spacex_images.py
    ```
    To download EPIC images from NASA, use the following command:
    ```
