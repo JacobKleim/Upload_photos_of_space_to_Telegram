@@ -23,10 +23,13 @@
 
 2. Create a .env file with parameters:
    ```
+   NASA_API_TOKEN=Your api token. You can get it at https://api.nasa.gov/
+   ```
+   ```
    LAUNCH_ID=latest (default spacex launch id for downloading photos)
    ```
    ```
-   BOT_TELEGRAM_TOKEN=token for your bot
+   TELEGRAM_BOT_TOKEN=token for your bot
    ```
    ```
    TELEGRAM_CHANNEL_ID=id of your Telegram channel or chat

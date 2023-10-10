@@ -4,7 +4,7 @@ import os
 import requests
 from dotenv import load_dotenv
 
-from utils import fetch_spacex_last_launch
+from utils import fetch_images
 
 
 def get_urls_spacex_launch_image(id):
@@ -32,7 +32,7 @@ def main():
 
     lauch_id = args.lauch_id
 
-    fetch_spacex_last_launch(get_urls_spacex_launch_image(lauch_id), filename)
+    fetch_images(get_urls_spacex_launch_image(lauch_id), filename)
 
 
 if __name__ == '__main__':

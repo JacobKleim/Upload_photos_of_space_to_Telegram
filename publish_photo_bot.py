@@ -36,7 +36,7 @@ def main():
 
     image = args.image
 
-    tg_token = os.environ.get('TELEGRAM_TOKEN_FOR_BOT')
+    tg_token = os.environ.get('BOT_TELEGRAM_TOKEN')
     channel_id = os.environ.get('TELEGRAM_CHANNEL_ID')
 
     max_retries = 5

@@ -41,7 +41,7 @@ def main():
 
     publication_frequency = int(args.publication_frequency)
 
-    tg_token = os.environ.get('BOT_TELEGRAM_TOKEN')
+    tg_token = os.environ.get('TELEGRAM_BOT_TOKEN')
     channel_id = os.environ.get('TELEGRAM_CHANNEL_ID')
 
     max_retries = 5

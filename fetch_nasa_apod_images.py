@@ -1,10 +1,13 @@
+import os
+
 import requests
+from dotenv import load_dotenv
 
-from utils import fetch_spacex_last_launch
+from utils import fetch_images
 
 
-def get_nasa_image_urls():
-    params = {'api_key': 'MYyGVtySmAkcUE1YrfZHTTSKbhf09dbXruwo0HrW',
+def get_nasa_image_urls(api_token):
+    params = {'api_key': api_token,
               'count': '30'}
     url = 'https://api.nasa.gov/planetary/apod'
     response = requests.get(url, params=params)
@@ -18,9 +21,12 @@ def get_nasa_image_urls():
 
 
 def main():
-    filename = 'nasa_apod'
+    load_dotenv()
 
-    fetch_spacex_last_launch(get_nasa_image_urls(), filename)
+    api_token = os.environ.get('NASA_API_TOKEN')
+
+    filename = 'nasa_apod'
+    fetch_images(get_nasa_image_urls(api_token), filename, api_token)
 
 
 if __name__ == '__main__':

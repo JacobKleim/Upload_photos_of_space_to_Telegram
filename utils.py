@@ -15,16 +15,19 @@ def get_file_extension(url):
     return extension
 
 
-def fetch_spacex_last_launch(urls, filename):
-    path = Path("images")
+def fetch_images(urls, filename, *args):
+    path = Path('images')
     path.mkdir(parents=True, exist_ok=True)
-    params = {'api_key': 'MYyGVtySmAkcUE1YrfZHTTSKbhf09dbXruwo0HrW'}
+    params = {'api_key': args}
     for url_number, url in enumerate(urls):
         extension = get_file_extension(url)
-        if not extension or extension == "":
+        if not extension or extension == '':
             pass
         filepath = path / f'{filename}_{url_number}{extension}'
-        response = requests.get(url, params=params)
+        if args:
+            response = requests.get(url, params=params)
+        else:
+            response = requests.get(url)
         response.raise_for_status()
 
         with open(filepath, 'wb') as file:

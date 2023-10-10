@@ -1,12 +1,14 @@
+import os
 import datetime
 
 import requests
+from dotenv import load_dotenv
 
-from utils import fetch_spacex_last_launch
+from utils import fetch_images
 
 
-def get_urls_epic_nasa_image():
-    params = {'api_key': 'MYyGVtySmAkcUE1YrfZHTTSKbhf09dbXruwo0HrW'}
+def get_urls_epic_nasa_image(api_token):
+    params = {'api_key': api_token}
     url = 'https://api.nasa.gov/EPIC/api/natural/images'
     response = requests.get(url, params=params)
     response.raise_for_status
@@ -24,9 +26,13 @@ def get_urls_epic_nasa_image():
 
 
 def main():
+    load_dotenv()
+
+    api_token = os.environ.get('NASA_API_TOKEN')
+
     filename = 'nasa_epic'
 
-    fetch_spacex_last_launch(get_urls_epic_nasa_image(), filename)
+    fetch_images(get_urls_epic_nasa_image(api_token), filename, api_token)
 
 
 if __name__ == '__main__':
