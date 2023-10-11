@@ -21,8 +21,9 @@ def publish_all_photos_bot(channel_id, tg_token, images):
 
     image_to_publish = images.pop(0)
     image_path = os.path.join(image_directory, image_to_publish)
-    bot.send_photo(chat_id=channel_id,
-                   photo=open(image_path, 'rb'))
+    with open(image_path, 'rb') as photo:
+        bot.send_photo(chat_id=channel_id,
+                       photo=photo)
 
     return images
 
@@ -30,12 +31,16 @@ def publish_all_photos_bot(channel_id, tg_token, images):
 def main():
     load_dotenv()
 
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description='The frequency (in seconds) at which images'
+                    'are published to the Telegram channel.'
+    )
 
-    parser.add_argument('-p', '--publication_frequency',
-                        type=int,
-                        help='The publication_frequency to use.',
-                        default=os.environ.get('PUBLICATION_FREQUENCY'))
+    parser.add_argument(
+        '-p', '--publication_frequency',
+        type=int,
+        help='The publication_frequency to use.',
+        default=os.environ.get('PUBLICATION_FREQUENCY'))
 
     args = parser.parse_args()
 
@@ -61,8 +66,6 @@ def main():
                 retry_count = 0
         except requests.exceptions.ReadTimeout as rt_error:
             print(rt_error)
-        except Exception as e:
-            print(e)
 
         time.sleep(publication_frequency)
 

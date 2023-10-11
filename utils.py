@@ -15,20 +15,27 @@ def get_file_extension(url):
     return extension
 
 
-def fetch_images(urls, filename, *args):
+def is_extension(extension):
+    if not extension or extension == '':
+        return False
+    else:
+        return True
+
+
+def fetch_image(url, url_number, filename, api_key):
     path = Path('images')
     path.mkdir(parents=True, exist_ok=True)
-    params = {'api_key': args}
-    for url_number, url in enumerate(urls):
-        extension = get_file_extension(url)
-        if not extension or extension == '':
-            pass
+    params = {'api_key': api_key}
+    extension = get_file_extension(url)
+    if is_extension(extension):
         filepath = path / f'{filename}_{url_number}{extension}'
-        if args:
-            response = requests.get(url, params=params)
-        else:
-            response = requests.get(url)
+        response = requests.get(url, params=params)
         response.raise_for_status()
 
         with open(filepath, 'wb') as file:
             file.write(response.content)
+
+
+def fetch_images(urls, filename, api_key=None):
+    for url_number, url in enumerate(urls):
+        fetch_image(url, url_number, filename, api_key)

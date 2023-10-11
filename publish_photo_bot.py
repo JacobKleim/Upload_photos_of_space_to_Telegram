@@ -20,23 +20,28 @@ def publish_photo_bot(channel_id, tg_token, image):
         image_to_publish = random.choice(image)
 
     image_path = os.path.join(image_directory, image_to_publish)
-    bot.send_photo(chat_id=channel_id,
-                   photo=open(image_path, 'rb'))
+    with open(image_path, 'rb') as photo:
+        bot.send_photo(chat_id=channel_id,
+                       photo=photo)
 
 
 def main():
     load_dotenv()
 
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description='The path to the image file'
+                    'you want to publish on Telegram.',
+    )
 
-    parser.add_argument('-i', '--image',
-                        help='The image to use.')
+    parser.add_argument(
+        '-i', '--image',
+        help='The image to use.')
 
     args = parser.parse_args()
 
     image = args.image
 
-    tg_token = os.environ.get('BOT_TELEGRAM_TOKEN')
+    tg_token = os.environ.get('TELEGRAM_BOT_TOKEN')
     channel_id = os.environ.get('TELEGRAM_CHANNEL_ID')
 
     max_retries = 5
@@ -53,8 +58,6 @@ def main():
             retry_count = 0
     except requests.exceptions.ReadTimeout as rt_error:
         print(rt_error)
-    except Exception as e:
-        print(e)
 
 
 if __name__ == '__main__':

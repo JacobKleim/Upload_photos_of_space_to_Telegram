@@ -6,17 +6,14 @@ from dotenv import load_dotenv
 from utils import fetch_images
 
 
-def get_nasa_image_urls(api_token):
+def get_nasa_image_urls(api_token,  images_quantity):
     params = {'api_key': api_token,
-              'count': '30'}
+              'count': images_quantity}
     url = 'https://api.nasa.gov/planetary/apod'
     response = requests.get(url, params=params)
-    response.raise_for_status
-    photos_info = response.json()
-    image_urls = []
-    for photo_info in photos_info:
-        url = photo_info['url']
-        image_urls.append(url)
+    response.raise_for_status()
+    photos = response.json()
+    image_urls = [photo['url'] for photo in photos]
     return image_urls
 
 
@@ -26,7 +23,10 @@ def main():
     api_token = os.environ.get('NASA_API_TOKEN')
 
     filename = 'nasa_apod'
-    fetch_images(get_nasa_image_urls(api_token), filename, api_token)
+    images_quantity = 30
+
+    fetch_images(get_nasa_image_urls(api_token, images_quantity),
+                 filename, api_token)
 
 
 if __name__ == '__main__':
