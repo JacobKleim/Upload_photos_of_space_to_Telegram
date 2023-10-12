@@ -3,7 +3,7 @@ import os
 import requests
 from dotenv import load_dotenv
 
-from utils import fetch_images
+from utils import fetch_image, get_file_extension
 
 
 def get_nasa_image_urls(api_token,  images_quantity):
@@ -25,8 +25,14 @@ def main():
     filename = 'nasa_apod'
     images_quantity = 30
 
-    fetch_images(get_nasa_image_urls(api_token, images_quantity),
-                 filename, api_token)
+    for url_number, url in enumerate(
+        get_nasa_image_urls(api_token,
+                            images_quantity)):
+
+        extension = get_file_extension(url)
+        if extension:
+            fetch_image(url, filename, url_number,
+                        extension, api_token)
 
 
 if __name__ == '__main__':

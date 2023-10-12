@@ -1,10 +1,10 @@
-import os
 import datetime
+import os
 
 import requests
 from dotenv import load_dotenv
 
-from utils import fetch_images
+from utils import fetch_image, get_file_extension
 
 
 def get_urls_epic_nasa_image(api_token, images_quantity):
@@ -34,8 +34,14 @@ def main():
 
     images_quantity = 5
 
-    fetch_images(get_urls_epic_nasa_image(api_token, images_quantity),
-                 filename, api_token)
+    for url_number, url in enumerate(
+        get_urls_epic_nasa_image(api_token,
+                                 images_quantity)):
+
+        extension = get_file_extension(url)
+        if extension:
+            fetch_image(url, filename, url_number,
+                        extension, api_token)
 
 
 if __name__ == '__main__':

@@ -4,7 +4,7 @@ import os
 import requests
 from dotenv import load_dotenv
 
-from utils import fetch_images
+from utils import fetch_image, get_file_extension
 
 
 def get_urls_spacex_launch_image(launch_id):
@@ -21,7 +21,8 @@ def main():
     load_dotenv()
 
     parser = argparse.ArgumentParser(
-        description='The SpaceX launch ID for which you want to fetch images.'
+        description='Fetches images related to SpaceX launches'
+                    'using a specified launch ID as a command-line argument.'
         )
 
     parser.add_argument(
@@ -35,7 +36,10 @@ def main():
 
     lauch_id = args.lauch_id
 
-    fetch_images(get_urls_spacex_launch_image(lauch_id), filename)
+    for url_number, url in enumerate(get_urls_spacex_launch_image(lauch_id)):
+        extension = get_file_extension(url)
+        if extension:
+            fetch_image(url, filename, url_number, extension, api_key=None)
 
 
 if __name__ == '__main__':

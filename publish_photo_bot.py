@@ -1,24 +1,13 @@
 import argparse
 import os
 import random
-import time
 
-import requests
 import telegram
 from dotenv import load_dotenv
 
 
-def publish_photo_bot(channel_id, tg_token, image):
+def publish_photo_bot(channel_id, tg_token, image_to_publish, image_directory):
     bot = telegram.Bot(token=tg_token)
-    image_directory = 'images'
-    if image:
-        image_to_publish = image
-    else:
-        images = os.walk(image_directory)
-        for _, _, files in images:
-            image = files
-        image_to_publish = random.choice(image)
-
     image_path = os.path.join(image_directory, image_to_publish)
     with open(image_path, 'rb') as photo:
         bot.send_photo(chat_id=channel_id,
@@ -44,20 +33,17 @@ def main():
     tg_token = os.environ.get('TELEGRAM_BOT_TOKEN')
     channel_id = os.environ.get('TELEGRAM_CHANNEL_ID')
 
-    max_retries = 5
-    retry_count = 0
+    image_directory = 'images'
 
-    try:
-        publish_photo_bot(channel_id, tg_token, image)
-        retry_count = 0
-    except ConnectionError as con_error:
-        print(con_error)
-        retry_count += 1
-        if retry_count >= max_retries:
-            time.sleep(30)
-            retry_count = 0
-    except requests.exceptions.ReadTimeout as rt_error:
-        print(rt_error)
+    if image:
+        image_to_publish = image
+    else:
+        images = os.walk(image_directory)
+        for _, _, files in images:
+            image = files
+        image_to_publish = random.choice(image)
+
+    publish_photo_bot(channel_id, tg_token, image_to_publish, image_directory)
 
 
 if __name__ == '__main__':
