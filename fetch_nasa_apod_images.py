@@ -25,10 +25,9 @@ def main():
     filename = 'nasa_apod'
     images_quantity = 30
 
-    for url_number, url in enumerate(
-        get_nasa_image_urls(api_token,
-                            images_quantity)):
+    image_urls = get_nasa_image_urls(api_token, images_quantity)
 
+    for url_number, url in enumerate(image_urls):
         extension = get_file_extension(url)
         if extension:
             fetch_image(url, filename, url_number,

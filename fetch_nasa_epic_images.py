@@ -34,10 +34,9 @@ def main():
 
     images_quantity = 5
 
-    for url_number, url in enumerate(
-        get_urls_epic_nasa_image(api_token,
-                                 images_quantity)):
+    image_urls = get_urls_epic_nasa_image(api_token, images_quantity)
 
+    for url_number, url in enumerate(image_urls):
         extension = get_file_extension(url)
         if extension:
             fetch_image(url, filename, url_number,
