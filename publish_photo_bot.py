@@ -2,16 +2,9 @@ import argparse
 import os
 import random
 
-import telegram
 from dotenv import load_dotenv
 
-
-def publish_photo_bot(channel_id, tg_token, image_to_publish, image_directory):
-    bot = telegram.Bot(token=tg_token)
-    image_path = os.path.join(image_directory, image_to_publish)
-    with open(image_path, 'rb') as photo:
-        bot.send_photo(chat_id=channel_id,
-                       photo=photo)
+from utils import publish_photo_bot
 
 
 def main():

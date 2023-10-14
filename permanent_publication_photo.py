@@ -3,20 +3,9 @@ import os
 import random
 import time
 
-import telegram
 from dotenv import load_dotenv
 
-
-def permanent_publication_photo(channel_id, tg_token, images, image_directory):
-    bot = telegram.Bot(token=tg_token)
-    images_copy = [*images]
-    image_to_publish = images_copy.pop(0)
-    image_path = os.path.join(image_directory, image_to_publish)
-    with open(image_path, 'rb') as photo:
-        bot.send_photo(chat_id=channel_id,
-                       photo=photo)
-
-    return images
+from utils import publish_photo_bot
 
 
 def main():
@@ -41,18 +30,20 @@ def main():
     tg_token = os.environ.get('TELEGRAM_BOT_TOKEN')
     channel_id = os.environ.get('TELEGRAM_CHANNEL_ID')
 
-    images = []
+    images_to_publish = []
     image_directory = 'images'
 
     while True:
-        if not images:
+        if not images_to_publish:
             images = os.walk(image_directory)
             for _, _, files in images:
-                images = files
-            random.shuffle(images)
+                images_to_publish = [*files]
+            random.shuffle(images_to_publish)
 
-        images = permanent_publication_photo(channel_id, tg_token,
-                                             images, image_directory)
+        image_to_publish = images_to_publish.pop(0)
+
+        publish_photo_bot(channel_id, tg_token,
+                          image_to_publish, image_directory)
 
         time.sleep(publication_frequency)
 
