@@ -9,7 +9,8 @@ from dotenv import load_dotenv
 
 def permanent_publication_photo(channel_id, tg_token, images, image_directory):
     bot = telegram.Bot(token=tg_token)
-    image_to_publish = images.pop(0)
+    images_copy = [*images]
+    image_to_publish = images_copy.pop(0)
     image_path = os.path.join(image_directory, image_to_publish)
     with open(image_path, 'rb') as photo:
         bot.send_photo(chat_id=channel_id,
